@@ -1,0 +1,105 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <%- include('./partials/head') %>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Blog Posts</title>
+    <link rel="stylesheet" href="../public/styles.css">
+</head>
+<body>
+    <%- include('./partials/nav') %>
+    <div class="blog-container">
+        <div class="card mt-4 shadow-sm rounded">
+          <img
+            src="<%= blog.blogImg %>"
+            class="card-img-top img-fluid"
+            alt="Blog Image"
+            style="height: 350px; object-fit: cover; border-top-left-radius: .25rem; border-top-right-radius: .25rem;"
+          />
+          <div class="card-body">
+            <h2 class="card-title font-weight-bold mb-3"><%= blog.title %></h2>
+            
+            <!-- Simplified blog content styling with spacing for better readability -->
+            <div class="blog-content mb-3">
+              <%= blog.content %>
+            </div>
+            
+            <div class="d-flex justify-content-between">
+              <p class="card-text mb-0">Posted by <%= blog.createdBy.name %></p>
+              <p class="card-text text-muted mb-0">Posted on <%= blog.date %></p>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Improved minimal CSS -->
+      <style>
+        .blog-content {
+          white-space: pre-wrap;
+          word-wrap: break-word;
+          word-break: break-word;
+          line-height: 1.6; /* Improved line height for better readability */
+          font-size: 1.1rem; /* Standard readable font size */
+        }
+        
+        .card-body {
+          padding: 1.5rem;
+        }
+      
+        .card-title {
+          font-size: 1.8rem; /* Larger title size for prominence */
+        }
+        
+        .card-text {
+          font-size: 1rem;
+        }
+      
+        .card-footer {
+          background-color: #f8f9fa;
+          padding: 0.75rem 1rem;
+        }
+      </style>
+      
+    <% if (locals.user) { %>
+      <!-- Display edit and delete buttons for authenticated users -->
+      <div class="comment-section mt-4">
+        <h3>Add a Comment</h3>
+        <!-- Comment Form -->
+         <%=blog._id%>
+        <form action="/blog/comment/<%= blog._id %>" method="POST">
+          <textarea 
+            name="comment" 
+            id="comment" 
+            rows="4" 
+            placeholder="Write your comment here..." 
+            style="width: 80%; padding: 10px; border-radius: 5px; border: 1px solid #ccc; font-size: 1rem; display: block; margin: 0 auto;">
+          </textarea>
+          <button type="submit" style="margin-top: 10px; padding: 10px 20px; border: none; background-color: #007bff; color: white; border-radius: 5px; font-size: 1rem; display: block; margin: 10px auto;">
+            Submit Comment
+          </button>
+        </form>
+        <a href="/postBlog">Create Another Post</a>
+    <% }  else { %>
+    </div>
+    <!-- Display all comments below -->
+ 
+        <a href="/auth/login">Login to Create a Post</a>
+        <% } %>
+        <div class="comments-list mt-4">
+          <h4>Comments (<%= comment.length %>)</h4>
+        
+          <% comment.forEach(comment => { %>
+            <div class="comment-item mb-3 p-3" style="border: 1px solid #ddd; border-radius: 5px; background-color: #f9f9f9;">
+              <img src="<%= comment.createdBy.profileImgUrl %>" alt="profile img" width="50px">
+              <p><strong><%= comment.createdBy.name %>:</strong> <%= comment.comment %></p>
+              <p class="text-muted">Posted on <%= comment.date %></p>
+            </div>
+          <% }) %>
+        </div>
+    
+     
+    <%- include('./partials/scripts') %>
+</body>
+</html>

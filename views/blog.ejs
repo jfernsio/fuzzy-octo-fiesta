@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<body>
+    <head>
+        <%- include('./partials/head') %>
+        <link rel="stylesheet" href="../public/styles.css">
+        <title>Add Blog</title>
+    </head>
+    <%- include('./partials/nav') %>
+    <%- include('./partials/scripts') %>
+
+</body>
+<form action="/postBlog" method="post">
+  <div class="container mt-4">
+    <label for="title" class="form-label">Title</label>
+    <input type="text" class="form-control" id="title"  name="title" aria-describedby="title">
+  
+  <div class="mb-3">
+    <label for="content" class="form-label">Content</label>
+    <input type="textbox" class="form-control" id="content" name="content">
+  </div>
+  <div class="mb-3">
+    <label for="blogImg" class="form-label">Cover Image</label>
+    <input type="textbox" class="form-control" id="blogImg" name="blogImg">
+  </div>
+
+
+  <button type="submit" class="btn btn-primary">Submit</button>
+</div>
+</form>
+</html>
+
+
+
+
+
+
